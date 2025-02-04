@@ -60,12 +60,12 @@ def save_to_excel(data):
 # Header
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    st.title("🚌 Cadastro para Caravana")
-    st.subheader("Templo de Campinas")
+    st.title("Templo de Campinas 🕌")
+    st.subheader("Cadastro para Caravana 🚌")
 
 # Main form
 with st.form("cadastro_caravana", clear_on_submit=True):
-    st.markdown("### Dados do Participante")
+    st.markdown("### Dados do Irmão")
     
     col1, col2 = st.columns(2)
     
@@ -111,7 +111,13 @@ with st.form("cadastro_caravana", clear_on_submit=True):
 
 # Display current registrations
 st.markdown("---")
-st.markdown("### Registros Cadastrados")
+
+col1, col2 = st.columns([4, 1])
+with col1:
+    st.markdown("### Registros Cadastrados")
+with col2:
+    if st.button("🔄 Atualizar"):
+        st.experimental_rerun()
 
 try:
     df = load_or_create_excel()
