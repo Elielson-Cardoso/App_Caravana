@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 import os
 
-# Configure the pages
+# Configure the page
 st.set_page_config(
     page_title="Cadastro para Caravana",
     page_icon="🚌",
