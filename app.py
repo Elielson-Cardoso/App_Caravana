@@ -38,7 +38,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Function to load or create Excel f
+# Function to load or create Excel
 def load_or_create_excel():
     excel_file = 'caravana.xlsx'
     if os.path.exists(excel_file):
