@@ -117,7 +117,7 @@ with col1:
     st.markdown("### Registros Cadastrados")
 with col2:
     if st.button("🔄 Atualizar"):
-        st.experimental_rerun()
+        st.rerun()
 
 try:
     df = load_or_create_excel()
