@@ -11,6 +11,18 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Ocultar o botão do GitHub via JavaScript
+st.markdown("""
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let githubButton = document.querySelector('footer div a[href*="github.com"]');
+            if (githubButton) {
+                githubButton.style.display = 'none';
+            }
+        });
+    </script>
+""", unsafe_allow_html=True)
+
 # Custom CSS
 st.markdown("""
     <style>
