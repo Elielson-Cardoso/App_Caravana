@@ -11,33 +11,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS
-st.markdown("""
-    <style>
-        .stButton>button {
-            width: 100%;
-            background-color: #2563eb;
-            color: white;
-            height: 3rem;
-            font-size: 1.1rem;
-        }
-        .stButton>button:hover {
-            background-color: #1d4ed8;
-        }
-        h1 {
-            text-align: center;
-            color: #1e3a8a;
-        }
-        .stRadio>label {
-            font-size: 1rem;
-            color: #374151;
-        }
-        .stTextInput>div>div>input {
-            font-size: 1rem;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
 # Function to load or create Excel
 def load_or_create_excel():
     excel_file = 'caravana.xlsx'
@@ -63,10 +36,8 @@ def clear_excel():
     df.to_excel(excel_file, index=False)
 
 # Header
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    st.title("Templo de Campinas 🕌")
-    st.subheader("Cadastro para Caravana 🚌")
+st.title("Templo de Campinas 🕌")
+st.subheader("Cadastro para Caravana 🚌")
 
 # Main form
 with st.form("cadastro_caravana", clear_on_submit=True):
@@ -74,9 +45,9 @@ with st.form("cadastro_caravana", clear_on_submit=True):
 
     ala = st.selectbox(
         "Caravana da ala", 
-        options=["Selecione a ala","Ala Geisel", "Ala Marechal Rondom", "Ala Independencia", "Ala Bauru", "Ala Bela Vista"],
+        options=["Selecione a ala", "Ala Geisel", "Ala Marechal Rondom", "Ala Independencia", "Ala Bauru", "Ala Bela Vista"],
         index=0
-        )
+    )
     
     col1, col2 = st.columns(2)
     
@@ -97,9 +68,9 @@ with st.form("cadastro_caravana", clear_on_submit=True):
     ordenancas = st.multiselect(
         "Ordenanças - Pode selecionar mais de um",
         options=["Batistério", "Confirmação", "Iniciatória", "Investidura", "Selamento"]
-    )       
+    )        
     
-    submit = st.form_submit_button("Cadastrar")
+    submit = st.form_submit_button("Cadastrar 📝")
     
     if submit:
         if nome and rg and celular:
@@ -129,38 +100,41 @@ with st.form("cadastro_caravana", clear_on_submit=True):
 
 # Display current registrations
 st.markdown("---")
+st.markdown("### Registros Cadastrados")
 
-col1, col2, col3 = st.columns([3, 1, 1])
-with col1:
-    st.markdown("### Registros Cadastrados")
-with col2:
-    if st.button("🔄 Atualizar"):
-        st.rerun()
+if 'show_table' not in st.session_state:
+    st.session_state.show_table = False
+    
+if 'table_loaded' not in st.session_state:
+    st.session_state.table_loaded = False
 
-show_table = st.session_state.get("show_table", False)
+if st.button("Ver 📋"):
+    st.session_state.show_table = not st.session_state.show_table
+    if st.session_state.show_table:
+        st.session_state.table_loaded = True
+    st.rerun()
 
-with col3:
-    if st.button("👁️ Ver"):
-        st.session_state.show_table = not show_table
-        st.rerun()
-
-if st.session_state.get("show_table", False):
+if st.session_state.show_table:
     password = st.text_input("Digite a senha para visualizar os dados:", type="password")
     if password == "alageisel2025":
         try:
             df = load_or_create_excel()
             if not df.empty:
-                st.dataframe(
-                    df.style.format({'data_cadastro': lambda x: x}),
-                    hide_index=True,
-                    use_container_width=True
-                )
+                st.dataframe(df, hide_index=True, use_container_width=True)
                 
-                # Botão para limpar a tabela
-                if st.button("🧹 Limpar Tabela"):
-                    clear_excel()
-                    st.success("✅ A tabela foi limpa com sucesso!")
-                    st.rerun()
+                col1, col2 = st.columns([1, 1])
+                
+                with col1:
+                    if st.button("🔄 Atualizar"):
+                        df = load_or_create_excel()
+                        st.experimental_rerun()
+                
+                with col2:
+                    if st.button("🧹 Limpar Tabela"):
+                        clear_excel()
+                        st.success("✅ A tabela foi limpa com sucesso!")
+                        st.experimental_rerun()
+                
             else:
                 st.info("Nenhum registro cadastrado ainda.")
         except Exception as e:
