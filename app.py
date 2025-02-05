@@ -73,7 +73,7 @@ with st.form("cadastro_caravana", clear_on_submit=True):
     st.markdown("### Dados do Irmão/ã")
 
     ala = st.selectbox(
-        "Caranava da ala", 
+        "Caravana da ala", 
         options=["Selecione a ala","Ala Geisel", "Ala Marechal Rondom", "Ala Independencia", "Ala Bauru", "Ala Bela Vista"],
         index=0
         )
