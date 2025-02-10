@@ -37,7 +37,7 @@ def clear_excel():
 
 # Header
 st.title("Templo de Campinas 🕌")
-st.subheader("Cadastro para Caravana 🚌")
+st.subheader("Cadastro para Caravana 18/04 🚌")
 
 # Main form
 with st.form("cadastro_caravana", clear_on_submit=True):
@@ -66,7 +66,7 @@ with st.form("cadastro_caravana", clear_on_submit=True):
     )
     
     ordenancas = st.multiselect(
-        "Ordenanças - Pode selecionar mais de um",
+        "Ordenanças que fará - Pode selecionar mais de um",
         options=["Batistério", "Confirmação", "Iniciatória", "Investidura", "Selamento"]
     )        
     
